@@ -10,15 +10,40 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_peran = $_SESSION['user_peran'] ?? '';
 
+// Define status groups for each role
+$cs_statuses = ['Diajukan', 'Diverifikasi', 'Disetujui'];
+$gudang_statuses = ['Menunggu Barang', 'Barang Diterima', 'Pemeriksaan Gudang'];
+$keuangan_statuses = ['Refund Diproses'];
+$completed_statuses = ['Selesai', 'Ditolak'];
+
 // Redirect Customer Service users to cs-dashboard.php
 if ($user_peran === 'Customer Service') {
     header("Location: cs-dashboard.php");
     exit();
 }
 
-// === Logika PHP untuk Menyiapkan Data Dasbor ===
-$stmt = $pdo->query("SELECT status_tiket FROM tiket_retur");
-$all_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Calculate ticket counts based on role and status
+if ($user_peran === 'Admin') {
+    // Admin sees all tickets
+    $stmt = $pdo->query("SELECT status_tiket FROM tiket_retur");
+    $all_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} elseif ($user_peran === 'Gudang') {
+    $placeholders = implode(',', array_fill(0, count($gudang_statuses), '?'));
+    $stmt = $pdo->prepare("SELECT status_tiket FROM tiket_retur WHERE status_tiket IN ($placeholders)");
+    $stmt->execute($gudang_statuses);
+    $all_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} elseif ($user_peran === 'Manajemen') {
+    $placeholders = implode(',', array_fill(0, count($keuangan_statuses), '?'));
+    $stmt = $pdo->prepare("SELECT status_tiket FROM tiket_retur WHERE status_tiket IN ($placeholders)");
+    $stmt->execute($keuangan_statuses);
+    $all_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    // Default to CS statuses
+    $placeholders = implode(',', array_fill(0, count($cs_statuses), '?'));
+    $stmt = $pdo->prepare("SELECT status_tiket FROM tiket_retur WHERE status_tiket IN ($placeholders)");
+    $stmt->execute($cs_statuses);
+    $all_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 $total_tickets = count($all_tickets);
 $completed_tickets = 0;
@@ -26,22 +51,63 @@ $pending_tickets = 0;
 
 foreach ($all_tickets as $ticket) {
     $status = strtolower($ticket['status_tiket']);
-    if ($status === 'selesai' || $status === 'ditolak') {
+    if (in_array($status, array_map('strtolower', $completed_statuses))) {
         $completed_tickets++;
     }
 }
 $pending_tickets = $total_tickets - $completed_tickets;
 
-// Ambil 5 tiket terbaru untuk ditampilkan di daftar
-$latest_tickets_stmt = $pdo->query("
-    SELECT t.id_tiket, t.nomor_tiket, t.status_tiket, t.dibuat_pada, p.nama_pelanggan, pr.nama_produk
-    FROM tiket_retur t
-    LEFT JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
-    LEFT JOIN produk pr ON t.id_produk = pr.id_produk
-    ORDER BY t.dibuat_pada DESC
-    LIMIT 5
-");
-$latest_tickets = $latest_tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
+// Fetch latest 5 tickets based on role and status
+if ($user_peran === 'Admin') {
+    $latest_tickets_stmt = $pdo->query("
+        SELECT t.id_tiket, t.nomor_tiket, t.status_tiket, t.dibuat_pada, p.nama_pelanggan, pr.nama_produk
+        FROM tiket_retur t
+        LEFT JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+        LEFT JOIN produk pr ON t.id_produk = pr.id_produk
+        ORDER BY t.dibuat_pada DESC
+        LIMIT 5
+    ");
+    $latest_tickets = $latest_tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
+} elseif ($user_peran === 'Gudang') {
+    $placeholders = implode(',', array_fill(0, count($gudang_statuses), '?'));
+    $latest_tickets_stmt = $pdo->prepare("
+        SELECT t.id_tiket, t.nomor_tiket, t.status_tiket, t.dibuat_pada, p.nama_pelanggan, pr.nama_produk
+        FROM tiket_retur t
+        LEFT JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+        LEFT JOIN produk pr ON t.id_produk = pr.id_produk
+        WHERE t.status_tiket IN ($placeholders)
+        ORDER BY t.dibuat_pada DESC
+        LIMIT 5
+    ");
+    $latest_tickets_stmt->execute($gudang_statuses);
+    $latest_tickets = $latest_tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
+} elseif ($user_peran === 'Manajemen') {
+    $placeholders = implode(',', array_fill(0, count($keuangan_statuses), '?'));
+    $latest_tickets_stmt = $pdo->prepare("
+        SELECT t.id_tiket, t.nomor_tiket, t.status_tiket, t.dibuat_pada, p.nama_pelanggan, pr.nama_produk
+        FROM tiket_retur t
+        LEFT JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+        LEFT JOIN produk pr ON t.id_produk = pr.id_produk
+        WHERE t.status_tiket IN ($placeholders)
+        ORDER BY t.dibuat_pada DESC
+        LIMIT 5
+    ");
+    $latest_tickets_stmt->execute($keuangan_statuses);
+    $latest_tickets = $latest_tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $placeholders = implode(',', array_fill(0, count($cs_statuses), '?'));
+    $latest_tickets_stmt = $pdo->prepare("
+        SELECT t.id_tiket, t.nomor_tiket, t.status_tiket, t.dibuat_pada, p.nama_pelanggan, pr.nama_produk
+        FROM tiket_retur t
+        LEFT JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+        LEFT JOIN produk pr ON t.id_produk = pr.id_produk
+        WHERE t.status_tiket IN ($placeholders)
+        ORDER BY t.dibuat_pada DESC
+        LIMIT 5
+    ");
+    $latest_tickets_stmt->execute($cs_statuses);
+    $latest_tickets = $latest_tickets_stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // Fungsi untuk membuat badge status
 function getStatusBadge($status) {
@@ -128,4 +194,3 @@ require_once 'template-header.php';
     </div>
 </div>
 
-<?php require_once 'template-footer.php'; ?>

@@ -1,44 +1,41 @@
-# Project CRM - Customer Relationship Management System
+# Sistem Manajemen Hubungan Pelanggan (CRM)
 
-## Description
-This project is a comprehensive Customer Relationship Management (CRM) system designed to streamline and automate various business processes. It includes modules for managing products, users, FAQs, tickets, refunds, and warehouse operations, along with dashboards for analytics and financial management. The system also features real-time chat management to enhance communication and support.
+## Deskripsi
+Proyek ini adalah sistem Manajemen Hubungan Pelanggan (CRM) yang komprehensif, dirancang untuk mempermudah dan mengotomatisasi berbagai proses bisnis. Sistem ini mencakup modul untuk manajemen produk, pengguna, FAQ, tiket, pengembalian dana, dan operasi gudang, serta dashboard untuk analitik dan manajemen keuangan. Fitur chat real-time juga disediakan untuk meningkatkan komunikasi dan dukungan.
 
-## Features
-- User Management: Register, manage, and authenticate users and staff.
-- Product Management: Add, update, and manage product information.
-- FAQ Management: Create and maintain frequently asked questions for customer support.
-- Ticketing System: Create, track, and resolve customer support tickets.
-- Refund and Return Processing: Handle refund and return requests efficiently.
-- Warehouse Management: Manage warehouse operations and stock movements.
-- Real-time Chat: Integrated chat system for customer and staff communication.
-- Analytics Dashboard: Visualize key metrics and performance indicators.
-- Financial Dashboard: Monitor financial data and transactions.
-- Secure Login and Session Management.
+## Fitur
+- Manajemen Pengguna: Registrasi, pengelolaan, dan autentikasi pengguna serta staf.
+- Manajemen Produk: Menambah, memperbarui, dan mengelola informasi produk.
+- Manajemen FAQ: Membuat dan memelihara pertanyaan yang sering diajukan untuk dukungan pelanggan.
+- Sistem Tiket: Membuat, melacak, dan menyelesaikan tiket dukungan pelanggan.
+- Proses Pengembalian Dana dan Retur: Menangani permintaan pengembalian dana dan retur dengan efisien.
+- Manajemen Gudang: Mengelola operasi gudang dan pergerakan stok.
+- Chat Real-time: Sistem chat terintegrasi untuk komunikasi antara pelanggan dan staf.
+- Dashboard Analitik: Visualisasi metrik utama dan indikator kinerja.
+- Dashboard Keuangan: Memantau data dan transaksi keuangan.
+- Login dan Manajemen Sesi yang Aman.
 
-## Installation
-1. Ensure you have a web server with PHP and MySQL installed (e.g., XAMPP, Laragon).
-2. Clone or download the project files into your web server's root directory.
-3. Import the provided `database.sql` and migration SQL files into your MySQL database.
-4. Configure the database connection in `config.php`.
-5. Set proper permissions for the `uploads/` directory to allow file uploads.
-6. Access the application via your web browser at the configured local server URL.
+## Instalasi
+1. Pastikan Anda memiliki web server dengan PHP dan MySQL terpasang (misalnya, XAMPP, Laragon).
+2. Clone atau unduh file proyek ke direktori root web server Anda.
+3. Impor file `database.sql` dan file migrasi SQL yang disediakan ke dalam database MySQL Anda.
+4. Konfigurasikan koneksi database di file `config.php`.
+5. Atur izin yang tepat untuk direktori `uploads/` agar dapat mengunggah file.
+6. Akses aplikasi melalui browser web Anda di URL server lokal yang telah dikonfigurasi.
 
-## Usage
-- Use the login page to authenticate as staff or user.
-- Navigate through the dashboard to access different modules.
-- Manage products, FAQs, tickets, refunds, and warehouse operations via their respective management pages.
-- Use the chat feature for real-time communication.
-- Monitor analytics and financial data through the dashboards.
+## Penggunaan
+- Gunakan halaman login untuk autentikasi sebagai staf atau pengguna.
+- Navigasi melalui dashboard untuk mengakses berbagai modul.
+- Kelola produk, FAQ, tiket, pengembalian dana, dan operasi gudang melalui halaman manajemen masing-masing.
+- Gunakan fitur chat untuk komunikasi real-time.
+- Pantau data analitik dan keuangan melalui dashboard.
 
-## Technologies Used
+## Teknologi yang Digunakan
 - PHP (Backend)
 - MySQL (Database)
 - HTML, CSS, JavaScript (Frontend)
-- Custom CSS styles in `assets/css/custom-style.css`
-- JavaScript for chat functionality in `assets/js/chat.js`
+- CSS kustom di `assets/css/custom-style.css`
+- JavaScript untuk fungsi chat di `assets/js/chat.js`
 
-## Author
+## Penulis
 Chaerul Candra Pranugrah
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
