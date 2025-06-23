@@ -190,13 +190,27 @@ $allowed_statuses = $role_allowed_statuses[$user_peran] ?? [];
                             <p class="mb-1 text-muted"><strong>Alasan:</strong><br> <?php echo nl2br(htmlspecialchars($tiket['alasan_retur'])); ?></p>
                              <hr>
                             <h6><i class="bi bi-image text-primary"></i> Bukti dari Pelanggan</h6>
-                            <?php if ($tiket['bukti_foto']): ?>
-                                <a href="uploads/<?php echo htmlspecialchars($tiket['bukti_foto']); ?>" target="_blank">
-                                    <img src="uploads/<?php echo htmlspecialchars($tiket['bukti_foto']); ?>" alt="Bukti Foto" class="img-fluid rounded border p-1 mt-2">
-                                </a>
-                            <?php else: ?>
-                                <p class="text-muted fst-italic">Tidak ada bukti yang diunggah.</p>
-                            <?php endif; ?>
+                            <?php
+                            if ($tiket['bukti_foto']) {
+                                $buktiArray = json_decode($tiket['bukti_foto'], true);
+                                if (json_last_error() === JSON_ERROR_NONE && is_array($buktiArray)) {
+                                    foreach ($buktiArray as $buktiFile) {
+                                        $safeFile = htmlspecialchars($buktiFile);
+                                        echo '<a href="uploads/' . $safeFile . '" target="_blank" class="d-inline-block me-2 mb-2">';
+                                        echo '<img src="uploads/' . $safeFile . '" alt="Bukti Foto" class="img-fluid rounded border p-1" style="max-width: 150px;">';
+                                        echo '</a>';
+                                    }
+                                } else {
+                                    // fallback if not a JSON array
+                                    $safeFile = htmlspecialchars($tiket['bukti_foto']);
+                                    echo '<a href="uploads/' . $safeFile . '" target="_blank">';
+                                    echo '<img src="uploads/' . $safeFile . '" alt="Bukti Foto" class="img-fluid rounded border p-1 mt-2">';
+                                    echo '</a>';
+                                }
+                            } else {
+                                echo '<p class="text-muted fst-italic">Tidak ada bukti yang diunggah.</p>';
+                            }
+                            ?>
 
                             <hr>
                             <h6><i class="bi bi-image text-success"></i> Bukti Refund Pembayaran</h6>

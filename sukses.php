@@ -42,7 +42,10 @@ unset($_SESSION['nomor_tiket_baru']);
                 <span class="ticket-number"><?php echo htmlspecialchars($nomor_tiket); ?></span>
             </div>
             <p>Mohon simpan nomor tiket ini untuk melacak status permintaan Anda. Tim kami akan segera melakukan verifikasi.</p>
-            <a href="form-retur.php" class="btn btn-primary mt-3">Ajukan Retur Lain</a>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="index.php" class="btn btn-primary">Halaman Utama</a>
+                <a href="status-tiket.php" class="btn btn-secondary">Cek Status Tiket</a>
+            </div>
         </div>
     </div>
 </body>

@@ -23,15 +23,15 @@ function kirim_email_notifikasi($penerima_email, $penerima_nama, $subjek, $isi_e
         // --- PENGATURAN SERVER SMTP (Gunakan detail Anda sendiri) ---
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;       // Aktifkan untuk melihat proses debug
         $mail->isSMTP();                                // Menggunakan protokol SMTP
-        $mail->Host       = 'smtp.gmail.com';           // Server SMTP Gmail
+        $mail->Host       = '';           // Server SMTP Mailtrap
         $mail->SMTPAuth   = true;                       // Aktifkan otentikasi SMTP
-        $mail->Username   = 'email.pengirim@gmail.com'; // Alamat email Gmail Anda
-        $mail->Password   = 'abcdefghijklmnop';         // Gunakan 'App Password' 16 digit Anda
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Gunakan enkripsi SSL/TLS
-        $mail->Port       = 465;                        // Port untuk SMTPS
+        $mail->Username   = ''; // Alamat email Mailtrap Anda
+        $mail->Password   = '';         // Gunakan 'App Password' 16 digit Anda
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan enkripsi STARTTLS
+        $mail->Port       = 2525;                        // Port untuk Mailtrap SMTP
 
         // --- PENGATURAN PENGIRIM & PENERIMA ---
-        $mail->setFrom('email.pengirim@gmail.com', 'Tim Dukungan TokoKita'); // Email dan nama pengirim
+        $mail->setFrom('no-reply@tokokita.com', 'Tim Dukungan TokoKita'); // Email dan nama pengirim
         $mail->addAddress($penerima_email, $penerima_nama);    // Email dan nama penerima
 
         // --- KONTEN EMAIL ---
@@ -43,8 +43,8 @@ function kirim_email_notifikasi($penerima_email, $penerima_nama, $subjek, $isi_e
         $mail->send();
         return true;
     } catch (Exception $e) {
-        // Jika gagal, Anda bisa mencatat errornya daripada menampilkannya
-        // echo "Pesan gagal terkirim. Mailer Error: {$mail->ErrorInfo}";
+        // Jika gagal, catat error ke file log
+        error_log("Pesan gagal terkirim. Mailer Error: {$mail->ErrorInfo}\n", 3, __DIR__ . '/email-error.log');
         return false;
     }
 }

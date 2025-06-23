@@ -83,15 +83,82 @@ try {
     if ($info) {
         require_once 'fungsi-email.php';
         $subjek = "Pembaruan Status Tiket Retur #" . $info['nomor_tiket'];
-        $isi_email = "
-            Halo " . htmlspecialchars($info['nama_pelanggan']) . ",<br><br>
-            Ada pembaruan untuk tiket retur Anda. Status tiket Anda sekarang adalah: <strong>$status_baru</strong>.<br><br>
-            Catatan dari tim kami: <br><i>" . (!empty($pesan) ? nl2br(htmlspecialchars($pesan)) : 'Tidak ada catatan tambahan.') . "</i><br><br>
-            Anda dapat melihat detailnya di portal pelanggan kami.<br><br>
-            Terima kasih,<br>
-            Tim TokoKita
-        ";
-        kirim_email_notifikasi($info['email_pelanggan'], $info['nama_pelanggan'], $subjek, $isi_email);
+        $isi_email = '
+        <html>
+        <head>
+          <style>
+            body {
+              font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+              background-color: #f9f9f9;
+              margin: 0;
+              padding: 0;
+              color: #333333;
+            }
+            .container {
+              background-color: #ffffff;
+              margin: 30px auto;
+              padding: 30px;
+              max-width: 600px;
+              border-radius: 10px;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+              border: 1px solid #e0e0e0;
+            }
+            h2 {
+              color: #2c3e50;
+              font-weight: 700;
+              margin-bottom: 20px;
+            }
+            p {
+              font-size: 16px;
+              line-height: 1.6;
+              margin-bottom: 20px;
+            }
+            .button {
+              display: inline-block;
+              padding: 12px 25px;
+              font-size: 16px;
+              color: #ffffff;
+              background-color: #3498db;
+              border-radius: 5px;
+              text-decoration: none;
+              font-weight: 600;
+              box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+              transition: background-color 0.3s ease;
+            }
+            .button:hover {
+              background-color: #2980b9;
+            }
+            .footer {
+              font-size: 12px;
+              color: #999999;
+              margin-top: 30px;
+              text-align: center;
+              border-top: 1px solid #e0e0e0;
+              padding-top: 15px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h2>Pembaruan Status Tiket Retur</h2>
+            <p>Halo ' . htmlspecialchars($info['nama_pelanggan']) . ',</p>
+            <p>Ada pembaruan untuk tiket retur Anda. Status tiket Anda sekarang adalah: <strong>' . $status_baru . '</strong>.</p>
+            <p>Catatan dari tim kami:</p>
+            <p><i>' . (!empty($pesan) ? nl2br(htmlspecialchars($pesan)) : 'Tidak ada catatan tambahan.') . '</i></p>
+            <p>Anda dapat memantau status pengajuan retur Anda secara langsung dengan mengklik tombol di bawah ini:</p>
+            <p><a href="http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/status-tiket.php?nomor_tiket=' . urlencode($info['nomor_tiket']) . '" class="button" target="_blank" rel="noopener">Cek Status Retur</a></p>
+            <p>Terima kasih,<br>Tim TokoKita</p>
+            <div class="footer">Jika Anda tidak melakukan perubahan ini, harap abaikan email ini.</div>
+          </div>
+        </body>
+        </html>
+        ';
+        $email_terkirim = kirim_email_notifikasi($info['email_pelanggan'], $info['nama_pelanggan'], $subjek, $isi_email);
+        if (!$email_terkirim) {
+            error_log("Gagal mengirim email notifikasi untuk tiket #" . $info['nomor_tiket'] . " ke " . $info['email_pelanggan'] . "\n", 3, __DIR__ . '/email-error.log');
+            // Optional: You can also display an error message or handle it as needed
+            // echo "Gagal mengirim email notifikasi.";
+        }
     }
     // --- AKHIR DARI KODE NOTIFIKASI ---
 
