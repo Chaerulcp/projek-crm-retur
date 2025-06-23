@@ -1,5 +1,17 @@
 # Sistem Manajemen Hubungan Pelanggan (CRM)
 
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://example.com)
+
+
+## Daftar Isi
+- [Deskripsi](#deskripsi)
+- [Fitur](#fitur)
+- [Instalasi](#instalasi)
+- [Penggunaan](#penggunaan)
+- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
+- [Kontribusi](#kontribusi)
+- [Kontak](#kontak)
+
 ## Deskripsi
 Proyek ini adalah sistem Manajemen Hubungan Pelanggan (CRM) yang komprehensif, dirancang untuk mempermudah dan mengotomatisasi berbagai proses bisnis. Sistem ini mencakup modul untuk manajemen produk, pengguna, FAQ, tiket, pengembalian dana, dan operasi gudang, serta dashboard untuk analitik dan manajemen keuangan. Fitur chat real-time juga disediakan untuk meningkatkan komunikasi dan dukungan.
 
@@ -37,5 +49,10 @@ Proyek ini adalah sistem Manajemen Hubungan Pelanggan (CRM) yang komprehensif, d
 - CSS kustom di `assets/css/custom-style.css`
 - JavaScript untuk fungsi chat di `assets/js/chat.js`
 
-## Penulis
-Chaerul Candra Pranugrah
+## Kontribusi
+Kontribusi sangat diterima! Silakan fork repositori ini dan buat pull request untuk fitur baru atau perbaikan bug. Pastikan untuk mengikuti standar kode yang ada dan sertakan deskripsi perubahan yang jelas.
+
+## Kontak
+Chaerul Candra Pranugrah  
+Email: chaerulcp.mea@gmail.com
+
