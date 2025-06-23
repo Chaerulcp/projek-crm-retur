@@ -1,6 +1,6 @@
 # Sistem Manajemen Hubungan Pelanggan (CRM)
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://example.com)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://ragam.biz.id/kelompok2/)
 
 
 ## Daftar Isi
