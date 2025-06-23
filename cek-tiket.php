@@ -8,22 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php"><i class="bi bi-box-seam"></i> TokoKita Retur</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="form-retur.php">Ajukan Retur</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="cek-tiket.php">Cek Status Tiket</a></li>
-                    <li class="nav-item"><a class="nav-link" href="faq.php">Pusat Bantuan (FAQ)</a></li>
-                </ul>
-                <a href="login.php" class="btn btn-outline-primary"><i class="bi bi-person-circle"></i> Login Staf</a>
-            </div>
-        </div>
-    </nav>
+<?php include 'nav.php'; ?>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-sm">
@@ -46,5 +33,6 @@
             </div>
         </div>
     </div>
+<?php include 'footer.php'; ?>
 </body>
 </html>

@@ -13,18 +13,20 @@ $produk_list = $pdo->query("SELECT id_produk, nama_produk FROM produk ORDER BY n
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulir Pengajuan Retur Barang</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        body {
+        .hero {
             background-color: #f8f9fa;
+            padding: 4rem 0;
         }
-        .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .feature-icon {
+            font-size: 3rem;
+            color: #0d6efd;
         }
     </style>
 </head>
 <body>
-    
+<?php include 'nav.php'; ?>
 
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
@@ -90,6 +92,6 @@ $produk_list = $pdo->query("SELECT id_produk, nama_produk FROM produk ORDER BY n
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<?php include 'footer.php'; ?>
 </body>
 </html>
