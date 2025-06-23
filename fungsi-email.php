@@ -21,21 +21,24 @@ function kirim_email_notifikasi($penerima_email, $penerima_nama, $subjek, $isi_e
 
     try {
         // --- PENGATURAN SERVER SMTP (Gunakan detail Anda sendiri) ---
-        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;       // Aktifkan untuk melihat proses debug
-        $mail->isSMTP();                                // Menggunakan protokol SMTP
-        $mail->Host       = '';           // Server SMTP Mailtrap
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;      // Aktifkan baris ini untuk melihat proses debug jika masih ada error
+        $mail->isSMTP();                              // Menggunakan protokol SMTP
+        $mail->Host       = '';        // Server SMTP
         $mail->SMTPAuth   = true;                       // Aktifkan otentikasi SMTP
-        $mail->Username   = ''; // Alamat email Mailtrap Anda
-        $mail->Password   = '';         // Gunakan 'App Password' 16 digit Anda
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan enkripsi STARTTLS
-        $mail->Port       = 465;                        // Port untuk Mailtrap SMTP
+        $mail->Username   = '';// Username SMTP Anda
+        $mail->Password   = '';               // Password SMTP Anda
+        
+        // --- INI BAGIAN YANG DIPERBAIKI ---
+        // Menggunakan enkripsi SMTPS (SSL) yang sesuai dengan port 465
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
+        $mail->Port       = 465;                        
 
         // --- PENGATURAN PENGIRIM & PENERIMA ---
         $mail->setFrom('no-reply@tokokita.com', 'Tim Dukungan TokoKita'); // Email dan nama pengirim
         $mail->addAddress($penerima_email, $penerima_nama);    // Email dan nama penerima
 
         // --- KONTEN EMAIL ---
-        $mail->isHTML(true);                             // Mengatur format email ke HTML
+        $mail->isHTML(true);                          // Mengatur format email ke HTML
         $mail->Subject = $subjek;
         $mail->Body    = $isi_email;
         $mail->AltBody = strip_tags($isi_email); // Versi teks biasa untuk email client non-HTML
@@ -44,7 +47,9 @@ function kirim_email_notifikasi($penerima_email, $penerima_nama, $subjek, $isi_e
         return true;
     } catch (Exception $e) {
         // Jika gagal, catat error ke file log
-        error_log("Pesan gagal terkirim. Mailer Error: {$mail->ErrorInfo}\n", 3, __DIR__ . '/email-error.log');
+        // Menggunakan format yang lebih informatif untuk debugging
+        $error_message = "Pesan gagal terkirim ke {$penerima_email}. Mailer Error: {$mail->ErrorInfo}\n";
+        error_log($error_message, 3, __DIR__ . '/email-error.log');
         return false;
     }
 }

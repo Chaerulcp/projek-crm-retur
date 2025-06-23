@@ -98,7 +98,7 @@ $produk_list = $pdo->query("SELECT id_produk, nama_produk FROM produk ORDER BY n
         <h2><i class="bi bi-arrow-repeat"></i> Formulir Pengajuan Retur & Refund</h2>
     </div>
     <div class="info-text">
-        <i class="bi bi-info-circle"></i> Pastikan Anda menggunakan alamat email yang aktif dan dapat diakses, karena notifikasi terkait pengajuan retur akan dikirimkan ke email tersebut.
+        <i class="bi bi-info-circle"></i> Pastikan Anda menggunakan alamat email yang aktif dan dapat diakses, karena notifikasi terkait pengajuan retur akan dikirimkan ke email tersebut. Jika email tidak masuk, periksa folder spam Anda.
     </div>
     <?php
     // Start session at the very beginning of the file, before any output
@@ -161,7 +161,6 @@ $produk_list = $pdo->query("SELECT id_produk, nama_produk FROM produk ORDER BY n
             unset($_SESSION['error_message']);
         }
         ?>
-        <!-- Google reCAPTCHA widget -->
         <div class="mb-3">
             <div class="g-recaptcha" data-sitekey="6Ld8-2orAAAAABF-ftSKn3-XmTbGIHvAD0cG-1fg"></div>
         </div>
