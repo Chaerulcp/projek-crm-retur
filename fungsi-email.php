@@ -28,7 +28,7 @@ function kirim_email_notifikasi($penerima_email, $penerima_nama, $subjek, $isi_e
         $mail->Username   = ''; // Alamat email Mailtrap Anda
         $mail->Password   = '';         // Gunakan 'App Password' 16 digit Anda
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan enkripsi STARTTLS
-        $mail->Port       = 2525;                        // Port untuk Mailtrap SMTP
+        $mail->Port       = 465;                        // Port untuk Mailtrap SMTP
 
         // --- PENGATURAN PENGIRIM & PENERIMA ---
         $mail->setFrom('no-reply@tokokita.com', 'Tim Dukungan TokoKita'); // Email dan nama pengirim

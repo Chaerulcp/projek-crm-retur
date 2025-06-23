@@ -9,7 +9,7 @@ require_once 'config.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate Google reCAPTCHA
-    $recaptcha_secret = 'YOUR_SECRET_KEY_HERE';
+    $recaptcha_secret = '6Ld8-2orAAAAAGpM8Tf7fzGoFW7xI6lwof2hySoc';
     $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
 
     $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
